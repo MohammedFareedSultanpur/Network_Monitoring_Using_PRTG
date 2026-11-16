@@ -1,0 +1,125 @@
+
+R2#sh run
+Building configuration...
+
+Current configuration : 3486 bytes
+!
+version 15.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+redundancy
+!
+!         
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.255.0.2 255.255.255.255
+!
+interface GigabitEthernet0/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!         
+interface GigabitEthernet0/1
+ description TO-R1
+ ip address 10.0.12.2 255.255.255.252
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+interface GigabitEthernet0/3
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ media-type rj45
+!
+router ospf 1
+ router-id 2.2.2.2
+ network 10.0.12.0 0.0.0.3 area 0
+ network 10.255.0.2 0.0.0.0 area 0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ip access-list standard SNMP-RO
+ permit 192.168.10.1
+!
+logging source-interface Loopback0
+logging host 192.168.10.1
+ipv6 ioam timestamp
+!
+snmp-server community PRTG-RO RO SNMP-RO
+snmp-server trap-source Loopback0
+snmp-server location CML-Lab
+snmp-server contact noc@lab.local
+snmp-server chassis-id 
+snmp-server enable traps snmp linkdown linkup
+snmp-server enable traps config
+snmp-server host 192.168.10.1 version 2c PRTG-RO 
+!
+!
+control-plane
+!
+banner exec ^C

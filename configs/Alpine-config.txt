@@ -1,0 +1,11 @@
+inserthostname-here:~$ ip addr show eth0
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 52:54:00:19:40:36 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.99.10/24 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fe19:4036/64 scope link 
+       valid_lft forever preferred_lft forever
+inserthostname-here:~$ ip route
+default via 10.0.99.1 dev eth0  metric 1 onlink 
+10.0.99.0/24 dev eth0 scope link  src 10.0.99.10 
+inserthostname-here:~$ 
